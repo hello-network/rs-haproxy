@@ -76,6 +76,63 @@ default['rs-haproxy']['backend']['fall'] = 2
 # HAProxy default maxconn
 default['rs-haproxy']['maxconn'] = 4096
 
+# New inputs
+
+default['haproxy']['user'] = 'haproxy'
+default['haproxy']['group'] = 'haproxy'
+
+default['haproxy']['enable_default_http'] = true
+default['haproxy']['incoming_address'] = '0.0.0.0'
+default['haproxy']['incoming_port'] = 80
+
+default['haproxy']['member_port'] = 8080
+default['haproxy']['member_weight'] = 1
+default['haproxy']['app_server_role'] = 'webserver'
+default['haproxy']['balance_algorithm'] = 'roundrobin'
+default['haproxy']['enable_ssl'] = false
+default['haproxy']['ssl_incoming_address'] = '0.0.0.0'
+default['haproxy']['ssl_incoming_port'] = 443
+default['haproxy']['ssl_member_port'] = 8443
+default['haproxy']['httpchk'] = nil
+default['haproxy']['ssl_httpchk'] = nil
+default['haproxy']['enable_admin'] = true
+default['haproxy']['admin']['address_bind'] = '127.0.0.1'
+default['haproxy']['admin']['port'] = 22_002
+default['haproxy']['enable_stats_socket'] = false
+default['haproxy']['stats_socket_path'] = '/var/run/haproxy.sock'
+default['haproxy']['stats_socket_user'] = node['haproxy']['user']
+default['haproxy']['stats_socket_group'] = node['haproxy']['group']
+default['haproxy']['pid_file'] = '/var/run/haproxy.pid'
+
+default['haproxy']['defaults_options'] = ['httplog', 'dontlognull', 'redispatch']
+default['haproxy']['x_forwarded_for'] = false
+default['haproxy']['defaults_timeouts']['connect'] = '5s'
+default['haproxy']['defaults_timeouts']['client'] = '50s'
+default['haproxy']['defaults_timeouts']['server'] = '50s'
+default['haproxy']['cookie'] = nil
+
+default['haproxy']['global_max_connections'] = 4096
+default['haproxy']['member_max_connections'] = 100
+
+# plus 10 frontend connections
+default['haproxy']['frontend_max_connections'] = 5006
+default['haproxy']['frontend_ssl_max_connections'] = 2000
+
+default['haproxy']['install_method'] = 'package'
+default['haproxy']['conf_dir'] = '/etc/haproxy'
+
+default['haproxy']['source']['version'] = '1.4.22'
+default['haproxy']['source']['url'] = 'http://haproxy.1wt.eu/download/1.4/src/haproxy-1.4.22.tar.gz'
+default['haproxy']['source']['checksum'] = 'ba221b3eaa4d71233230b156c3000f5c2bd4dace94d9266235517fe42f917fc6'
+default['haproxy']['source']['prefix'] = '/usr/local'
+default['haproxy']['source']['target_os'] = 'generic'
+default['haproxy']['source']['target_cpu'] = ''
+default['haproxy']['source']['target_arch'] = ''
+default['haproxy']['source']['use_pcre'] = false
+default['haproxy']['source']['use_openssl'] = false
+default['haproxy']['source']['use_zlib'] = false
+
+# Optimization - RS
 default['haproxy']['config']['defaults']['options'] = []
 default['haproxy']['source']['prefix'] = '/usr/local'
 default['haproxy']['source']['target_os'] = 'linux2628'
