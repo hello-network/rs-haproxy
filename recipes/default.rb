@@ -162,7 +162,7 @@ end
 Chef::Log.info node['haproxy']['config']
 haproxy_config = Mash.new(
 'global' => {
-  'maxconn' => (node['rs-haproxy']['maxconn'].to_i+10)
+  'maxconn' => (node['rs-haproxy']['global_max_connections'].to_i+10)
   }
 )
 
