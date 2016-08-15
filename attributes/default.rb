@@ -74,7 +74,7 @@ default['rs-haproxy']['backend']['rise'] = 3
 default['rs-haproxy']['backend']['fall'] = 2
 
 # HAProxy default maxconn
-default['rs-haproxy']['maxconn'] = 4096
+default['rs-haproxy']['global_max_connections'] = 4096
 
 # New inputs
 

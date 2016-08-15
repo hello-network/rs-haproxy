@@ -17,8 +17,8 @@
 # limitations under the License.
 #
 
-marker "recipe_start_rightscale" do
-  template "rightscale_audit_entry.erb"
+marker 'recipe_start_rightscale' do
+  template 'rightscale_audit_entry.erb'
 end
 
 include_recipe 'rightscale_tag::default'
@@ -50,10 +50,10 @@ app_server_pools = group_servers_by_application_name(app_servers)
 # which made the remote recipe call is updated in the list of application servers
 # in the deployment.
 unless node['remote_recipe'].nil? || node['remote_recipe'].empty?
-  raise "Load balancer pool name is missing in the remote recipe call!" if node['remote_recipe']['pool_name'].nil?
+  raise 'Load balancer pool name is missing in the remote recipe call!' if node['remote_recipe']['pool_name'].nil?
   remote_server_pool = node['remote_recipe']['pool_name']
 
-  raise "Instance UUID of the remote server is missing!" if node['remote_recipe']['application_server_id'].nil?
+  raise 'Instance UUID of the remote server is missing!' if node['remote_recipe']['application_server_id'].nil?
   remote_server_uuid = node['remote_recipe']['application_server_id']
 
   case node['remote_recipe']['application_action']
@@ -85,7 +85,7 @@ node.default['haproxy']['config']['frontend'] = {}
 node.default['haproxy']['config']['frontend']['all_requests'] ||= {}
 node.default['haproxy']['config']['frontend']['all_requests']['default_backend'] = node['rs-haproxy']['pools'].last
 node.default['haproxy']['config']['frontend']['all_requests']['bind'] = "#{node['haproxy']['incoming_address']}:#{node['haproxy']['incoming_port']}"
-node.default['haproxy']['config']['frontend']['all_requests']['maxconn'] = node['rs-haproxy']['maxconn']
+node.default['haproxy']['config']['frontend']['all_requests']['maxconn'] = node['rs-haproxy']['global_max_connections']
 
 # Initialize backend section which will be generated in the haproxy.cfg
 node.default['haproxy']['config']['backend'] = {}
@@ -98,7 +98,7 @@ node['rs-haproxy']['pools'].each do |pool_name|
   if node['rs-haproxy']['session_stickiness']
     # When cookie is enabled the haproxy.cnf should have this dummy server
     # entry for the haproxy to start without any errors
-    backend_servers_list << {'disabled-server 127.0.0.1:1' => {'disabled' => true}}
+    backend_servers_list << {'disabled-server 127.0.0.1:1' => { 'disabled' => true } }
   end
 
   # If there exists application servers with application name same as pool name add those

@@ -167,8 +167,8 @@ attribute 'rs-haproxy/backend/inter',
   :required => 'optional',
   :default => '300'
 
-attribute 'rs-haproxy/maxconn',
-  :display_name => 'max connections for haproxy',
-  :description => 'max connections for haproxy',
+attribute 'rs-haproxy/global_max_connections',
+  :display_name => 'Globa max connections for haproxy',
+  :description => 'Global max connections for haproxy',
   :required => 'optional',
   :default => '4096'
