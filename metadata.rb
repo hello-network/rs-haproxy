@@ -168,7 +168,25 @@ attribute 'rs-haproxy/backend/inter',
   :default => '300'
 
 attribute 'rs-haproxy/global_max_connections',
-  :display_name => 'Globa max connections for haproxy',
+  :display_name => 'Global max connections for haproxy',
   :description => 'Global max connections for haproxy',
   :required => 'optional',
   :default => '4096'
+
+attribute 'rs-haproxy/defaults_timeouts/connect',
+  :display_name => 'Connect timeout for haproxy',
+  :description => 'Connect timeout for haproxy',
+  :required => 'optional',
+  :default => '5s'
+
+attribute 'rs-haproxy/defaults_timeouts/client',
+  :display_name => 'Client timeout for haproxy',
+  :description => 'Client timeout for haproxy',
+  :required => 'optional',
+  :default => '50s'
+
+attribute 'rs-haproxy/defaults_timeouts/server',
+  :display_name => 'Server timeout for haproxy',
+  :description => 'Server timeout for haproxy',
+  :required => 'optional',
+  :default => '50s'
