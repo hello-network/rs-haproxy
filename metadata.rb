@@ -190,3 +190,21 @@ attribute 'rs-haproxy/defaults_timeouts/server',
   :description => 'Server timeout for haproxy',
   :required => 'optional',
   :default => '50s'
+
+attribute 'rs-haproxy/user',
+  :display_name => 'HAProxy system user',
+  :description => 'System user for HAProxy',
+  :required => 'optional',
+  :default => 'haproxy'
+
+attribute 'rs-haproxy/group',
+  :display_name => 'HAProxy system group',
+  :description => 'System group for HAProxy',
+  :required => 'optional',
+  :default => 'haproxy'
+
+attribute 'rs-haproxy/x_forwarded_for',
+  :display_name => 'x_forwarded_for setting',
+  :description => 'x_forwarded_for setting',
+  :required => 'optional',
+  :default => 'true'
