@@ -69,6 +69,11 @@ node.override['haproxy']['defaults_timeouts']['client'] = node['rs-haproxy']['de
 Chef::Log.info "Overriding haproxy/defaults_timeouts/server to '#{node['rs-haproxy']['defaults_timeouts']['server']}'..."
 node.override['haproxy']['defaults_timeouts']['server'] = node['rs-haproxy']['defaults_timeouts']['server']
 
+node.override['haproxy']['user'] = node['rs-haproxy']['user']
+node.override['haproxy']['user'] = node['rs-haproxy']['user']
+node.override['haproxy']['x_forwarded_for'] = node['rs-haproxy']['x_forwarded_for']
+
+
 # Setting haproxy config in attributes
 node.default['haproxy']['config']['global'] = {
   'user' => node['haproxy']['user'],

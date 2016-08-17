@@ -77,9 +77,10 @@ default['rs-haproxy']['backend']['fall'] = 2
 default['rs-haproxy']['global_max_connections'] = 4096
 
 # New inputs
+default['rs-haproxy']['user'] = 'haproxy'
+default['rs-haproxy']['group'] = 'haproxy'
 
-default['haproxy']['user'] = 'haproxy'
-default['haproxy']['group'] = 'haproxy'
+default['rs-haproxy']['x_forwarded_for'] = 'true'
 
 default['haproxy']['enable_default_http'] = true
 default['haproxy']['incoming_address'] = '0.0.0.0'
@@ -120,15 +121,6 @@ default['haproxy']['frontend_ssl_max_connections'] = 2000
 
 default['haproxy']['install_method'] = 'package'
 default['haproxy']['conf_dir'] = '/etc/haproxy'
-
-
-default['haproxy']['source']['prefix'] = '/usr/local'
-default['haproxy']['source']['target_os'] = 'generic'
-default['haproxy']['source']['target_cpu'] = ''
-default['haproxy']['source']['target_arch'] = ''
-default['haproxy']['source']['use_pcre'] = false
-default['haproxy']['source']['use_openssl'] = false
-default['haproxy']['source']['use_zlib'] = false
 
 # Optimization - RS
 default['haproxy']['config']['defaults']['options'] = []
