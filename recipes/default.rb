@@ -61,7 +61,7 @@ Chef::Log.info "Overriding haproxy/balance_algorithm to '#{node['rs-haproxy']['b
 node.override['haproxy']['balance_algorithm'] = node['rs-haproxy']['balance_algorithm']
 
 Chef::Log.info "Overriding haproxy/defaults_timeouts/connect to '#{node['rs-haproxy']['defaults_timeouts']['connect']}'..."
-node.override['haproxy']['defaults_timeouts']['connect'] = node['rs-haproxy']['defaults_timeouts']['connect']
+node.override['haproxy']['config']['defaults']['timeout']['connect'] = node['rs-haproxy']['defaults_timeouts']['connect']
 
 Chef::Log.info "Overriding haproxy/defaults_timeouts/client to '#{node['rs-haproxy']['defaults_timeouts']['client']}'..."
 node.override['haproxy']['defaults_timeouts']['client'] = node['rs-haproxy']['defaults_timeouts']['client']
