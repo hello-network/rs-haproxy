@@ -80,7 +80,7 @@ node.default['haproxy']['config']['global'] = {
   'user' => node['haproxy']['user'],
   'group' => node['haproxy']['group'],
   'pidfile' => node['haproxy']['pid_file'],
-  'log' => "/dev/log syslog node['rs-haproxy']['log_level']",
+  'log' => "/dev/log syslog #{node['rs-haproxy']['log_level']}",
   'daemon' => true,
   'quiet' => true
 }
