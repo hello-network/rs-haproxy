@@ -208,3 +208,9 @@ attribute 'rs-haproxy/x_forwarded_for',
   :description => 'x_forwarded_for setting',
   :required => 'optional',
   :default => 'true'
+
+  attribute 'rs-haproxy/log_level',
+    :display_name => 'haproxy log level',
+    :description => 'options emerg, alert, crit, err, warning, notice, info, debug',
+    :required => 'optional',
+    :default => 'info'

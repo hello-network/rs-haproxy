@@ -73,13 +73,14 @@ node.override['haproxy']['user'] = node['rs-haproxy']['user']
 node.override['haproxy']['group'] = node['rs-haproxy']['group']
 node.override['haproxy']['config']['defaults']['x_forwarded_for'] = node['rs-haproxy']['x_forwarded_for']
 
+# emerg, alert, crit, err, warning, notice, info, debug
+node['rs-haproxy']['log']['server'] = info
 # Setting haproxy config in attributes
 node.default['haproxy']['config']['global'] = {
   'user' => node['haproxy']['user'],
   'group' => node['haproxy']['group'],
   'pidfile' => node['haproxy']['pid_file'],
-  'log' => '/dev/log syslog info',
-  #'timeout client' => node['haproxy']['defaults_timeouts']['client'],
+  'log' => "/dev/log syslog node['rs-haproxy']['log_level']",
   'daemon' => true,
   'quiet' => true
 }
