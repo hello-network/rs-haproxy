@@ -79,6 +79,7 @@ node.default['haproxy']['config']['global'] = {
   'group' => node['haproxy']['group'],
   'pidfile' => node['haproxy']['pid_file'],
   'log' => '/dev/log syslog info',
+  'timeout client' => node['haproxy']['defaults_timeouts']['client'],
   'daemon' => true,
   'quiet' => true
 }
