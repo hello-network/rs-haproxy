@@ -70,7 +70,7 @@ Chef::Log.info "Overriding haproxy/defaults_timeouts/server to '#{node['rs-hapro
 node.override['haproxy']['defaults_timeouts']['server'] = node['rs-haproxy']['defaults_timeouts']['server']
 
 node.override['haproxy']['user'] = node['rs-haproxy']['user']
-node.override['haproxy']['user'] = node['rs-haproxy']['user']
+node.override['haproxy']['group'] = node['rs-haproxy']['group']
 node.override['haproxy']['x_forwarded_for'] = node['rs-haproxy']['x_forwarded_for']
 
 # Setting haproxy config in attributes
@@ -177,6 +177,9 @@ Chef::Log.info node['haproxy']['config']
 haproxy_config = Mash.new(
   'global' => {
     'maxconn' => (node['rs-haproxy']['global_max_connections'].to_i + 10)
+  },
+  'defaults' => {
+    'timeout' => 5
   }
 )
 
