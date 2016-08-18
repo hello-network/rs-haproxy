@@ -64,10 +64,10 @@ Chef::Log.info "Overriding haproxy/defaults_timeouts/connect to '#{node['rs-hapr
 node.override['haproxy']['config']['defaults']['timeout']['connect'] = node['rs-haproxy']['defaults_timeouts']['connect']
 
 Chef::Log.info "Overriding haproxy/defaults_timeouts/client to '#{node['rs-haproxy']['defaults_timeouts']['client']}'..."
-node.override['haproxy']'config']['defaults']['timeout']['client'] = node['rs-haproxy']['defaults_timeouts']['client']
+node.override['haproxy']['config']['defaults']['timeout']['client'] = node['rs-haproxy']['defaults_timeouts']['client']
 
 Chef::Log.info "Overriding haproxy/defaults_timeouts/server to '#{node['rs-haproxy']['defaults_timeouts']['server']}'..."
-node.override['haproxy']'config']['defaults']['timeout']['server'] = node['rs-haproxy']['defaults_timeouts']['server']
+node.override['haproxy']['config']['defaults']['timeout']['server'] = node['rs-haproxy']['defaults_timeouts']['server']
 
 node.override['haproxy']['user'] = node['rs-haproxy']['user']
 node.override['haproxy']['group'] = node['rs-haproxy']['group']
