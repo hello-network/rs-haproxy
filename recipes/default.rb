@@ -80,6 +80,7 @@ node.default['haproxy']['config']['global'] = {
   'group' => node['haproxy']['group'],
   'pidfile' => node['haproxy']['pid_file'],
   'log' => "/dev/log syslog info",
+  'maxconn' => (node['rs-haproxy']['global_max_connections'].to_i+10),
   'daemon' => true,
   'quiet' => true
   }
@@ -90,7 +91,7 @@ node.default['haproxy']['config']['defaults']['balance'] = 'roundrobin'
 
 Chef::Log.info node['haproxy']['config']['defaults']['option']
 option_array = ['httplog', 'dontlognull', 'redispatch']
-node['haproxy']['config']['defaults']['option'].each { |i| option_array<<i } unless node['haproxy']['config']['defaults']['option'].nil?
+node['haproxy']['config']['defaults']['option'].each { |i| option_array << i } unless node['haproxy']['config']['defaults']['option'].nil?
 node.default['haproxy']['config']['defaults']['option'] = option_array
 
 Chef::Log.info "creating base connection"
@@ -121,7 +122,7 @@ if node['rs-haproxy']['ssl_cert']
   node.default['haproxy']['config']['frontend']['all_requests'][https_bind] = "ssl crt #{ssl_cert_file} no-sslv3"
 
   # Redirect all HTTP requests to HTTPS
- node.default['frontend']['all_requests']['redirect'] = 'scheme https if !{ ssl_fc }'
+  node.default['frontend']['all_requests']['redirect'] = 'scheme https if !{ ssl_fc }'
 end
 
 # Set up haproxy socket
@@ -172,13 +173,6 @@ cookbook_file '/etc/logrotate.d/logrotate' do
   group 'root'
   action :create
 end
-
-Chef::Log.info node['haproxy']['config']
-haproxy_config = Mash.new(
-'global' => {
-  'maxconn' => (node['rs-haproxy']['global_max_connections'].to_i+10)
-  }
-)
 
 # Install HAProxy and setup haproxy.cnf
 haproxy "set up haproxy.cnf" do
