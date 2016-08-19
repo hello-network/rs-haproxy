@@ -87,6 +87,7 @@ node.default['haproxy']['config']['global'] = {
 node.default['haproxy']['config']['defaults']['log'] = 'global'
 node.default['haproxy']['config']['defaults']['mode'] = 'http'
 node.default['haproxy']['config']['defaults']['balance'] = 'roundrobin'
+node.default['haproxy']['config']['defaults']['option'] = ['forwardfor header x-forwarded-for']
 
 Chef::Log.info node['haproxy']['config']['defaults']['option']
 option_array = ['httplog', 'dontlognull', 'redispatch']

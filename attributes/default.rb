@@ -80,28 +80,15 @@ default['rs-haproxy']['global_max_connections'] = 4096
 default['rs-haproxy']['user'] = 'haproxy'
 default['rs-haproxy']['group'] = 'haproxy'
 
-default['rs-haproxy']['x_forwarded_for'] = 'true'
-
-default['haproxy']['enable_default_http'] = true
-default['haproxy']['incoming_address'] = '0.0.0.0'
-default['haproxy']['incoming_port'] = 80
-
-
+#default['rs-haproxy']['x_forwarded_for'] = 'true'
 
 default['haproxy']['defaults_options'] = ['httplog', 'dontlognull', 'redispatch']
-default['haproxy']['x_forwarded_for'] = false
- 
 default['haproxy']['cookie'] = nil
 
-default['haproxy']['global_max_connections'] = 4096
-default['haproxy']['member_max_connections'] = 100
+ default['haproxy']['member_max_connections'] = 100
 
-# plus 10 frontend connections
 default['haproxy']['frontend_max_connections'] = 5006
 default['haproxy']['frontend_ssl_max_connections'] = 2000
-
-default['haproxy']['install_method'] = 'package'
-default['haproxy']['conf_dir'] = '/etc/haproxy'
 
 # Optimization - RS
 default['haproxy']['config']['defaults']['options'] = []
