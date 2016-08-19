@@ -71,7 +71,6 @@ node.override['haproxy']['config']['defaults']['timeout']['server'] = node['rs-h
 
 node.override['haproxy']['user'] = node['rs-haproxy']['user']
 node.override['haproxy']['group'] = node['rs-haproxy']['group']
-node.override['haproxy']['config']['defaults']['x_forwarded_for'] = node['rs-haproxy']['x_forwarded_for']
 
 # emerg, alert, crit, err, warning, notice, info, debug
 # Setting haproxy config in attributes
