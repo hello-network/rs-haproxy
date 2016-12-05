@@ -76,6 +76,9 @@ default['rs-haproxy']['backend']['fall'] = 2
 # HAProxy default maxconn
 default['rs-haproxy']['maxconn'] = 4096
 
+# HAproxy default member_max_connections
+default['haproxy']['member_max_connections'] = 100
+
 default['haproxy']['config']['defaults']['options'] = []
 default['haproxy']['source']['prefix'] = '/usr/local'
 default['haproxy']['source']['target_os'] = 'linux2628'
@@ -83,3 +86,6 @@ default['haproxy']['source']['target_cpu'] = 'x86_64'
 default['haproxy']['source']['use_pcre'] = true
 default['haproxy']['source']['use_openssl'] = true
 default['haproxy']['source']['use_zlib'] = true
+
+# HAproxy haproxy config defaults options 
+default['haproxy']['config']['defaults']['http-check expect'] = []
