@@ -212,3 +212,13 @@ attribute "rs-haproxy/ssl_bind_ciphers",
   :description => "Ciphers that are used by HAPROXY for SSL e.g.: kEECDH+aRSA+AES:kRSA+AES:+AES256:!kEDH:!LOW:!EXP:!MD5:!aNULL:!eNULL!DSS",
   :choice => ["kEECDH+aRSA+AES:kRSA+AES:+AES256:DES-CBC3-SHA:!kEDH:!LOW:!EXP:!MD5:!aNULL:!eNULL!DSS"],
   :default => ''
+
+attribute 'rs-haproxy/acls',
+  :display_name => 'HAProxy ACLS',
+  :type => 'array',
+  :required => "recommended",
+  :default => ["default"],
+  :recipes => [
+    'rs-haproxy::default',
+    'rs-haproxy::tags',
+    'rs-haproxy::frontend' ]
