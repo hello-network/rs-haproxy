@@ -15,4 +15,13 @@ group :integration do
   gem 'kitchen-vagrant', '0.15.0'
   gem 'strainer', '~> 3.3.0'
   gem 'rspec-expectations', '~> 2.14.0'
+  gem 'coveralls', require: false
+  gem 'machine_tag'
+  gem 'chef-rewind'
 end
+
+# These chef cookbooks have been updated to require later version of ruby [>= ruby2].  These pins resolve dep issues and allow ruby 1.x to work
+gem 'rack', '= 1.6.4'
+gem 'json', '~> 1.8', '>= 1.8.3'
+gem 'buff-ignore', '= 1.1.1'
+gem 'net-http-persistent','<3.0.0'

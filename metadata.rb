@@ -4,7 +4,7 @@ maintainer_email 'cookbooks@rightscale.com'
 license          'Apache 2.0'
 description      'Application cookbook to set up HAProxy on a RightScale environment'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '1.1.6'
+version          '1.1.15'
 
 depends 'marker', '~> 1.0.1'
 depends 'haproxy', '~> 1.6.0'
@@ -209,8 +209,58 @@ attribute 'rs-haproxy/x_forwarded_for',
   :required => 'optional',
   :default => 'true'
 
-  attribute 'rs-haproxy/log_level',
-    :display_name => 'haproxy log level',
-    :description => 'options emerg, alert, crit, err, warning, notice, info, debug',
-    :required => 'optional',
-    :default => 'info'
+attribute 'rs-haproxy/log_level',
+  :display_name => 'haproxy log level',
+  :description => 'options emerg, alert, crit, err, warning, notice, info, debug',
+  :required => 'optional',
+  :default => 'info'
+
+attribute "haproxy/member_max_connections",
+  :dispay_name => "member_max_connections",
+  :desciption => "member_max_connections",
+  :required => "optional",
+  :default => '100'
+
+attribute "haproxy/config/defaults/http-check expect",
+  :display_name => "http-check expect",
+  :description => "http-check expect",
+  :required => "optional",
+  :choice => ['rstatus 20*', 'rstatus 30*|20*','rstatus 401|30*|20*' ],
+  :default => 'rstatus 20*'
+
+attribute "rs-haproxy/force_ssl_redirect",
+  :display_name => "redirect scheme",
+  :description => "Redirect all HTTP traffic to HTTPS when SSL is handled by haproxy.",
+  :required => "optional",
+  :choice => ["true", "false"],
+  :default => "false"
+
+attribute "rs-haproxy/acl_list_for_https_exclusion",
+  :display_name => "acl list for https exclusion from force_ssl_redirect",
+  :description => "Paths to exclude from force ssl. e.g.:  /web.*  /web2/test1.*  The .* required to get everything afterwards.  Please do NOT put a command between the paths",
+  :required => "optional",
+  :default => ''
+
+attribute "rs-haproxy/force_ssl_cipher_list",
+  :display_name => "SSL Ciphers",
+  :description => "Use the value from ssl_bind_ciphers if true",
+  :required => "optional",
+  :choice => ["true", "false"],
+  :default => "false"
+
+
+attribute "rs-haproxy/ssl_bind_ciphers",
+  :display_name => "ciphers that are used by haproxy for ssl",
+  :description => "Ciphers that are used by HAPROXY for SSL e.g.: kEECDH+aRSA+AES:kRSA+AES:+AES256:!kEDH:!LOW:!EXP:!MD5:!aNULL:!eNULL!DSS",
+  :choice => ["kEECDH+aRSA+AES:kRSA+AES:+AES256:DES-CBC3-SHA:!kEDH:!LOW:!EXP:!MD5:!aNULL:!eNULL!DSS"],
+  :default => ''
+
+attribute 'rs-haproxy/acls',
+  :display_name => 'HAProxy ACLS',
+  :type => 'array',
+  :required => "recommended",
+  :default => ["default"],
+  :recipes => [
+    'rs-haproxy::default',
+    'rs-haproxy::tags',
+    'rs-haproxy::frontend' ]
