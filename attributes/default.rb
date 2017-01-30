@@ -60,13 +60,13 @@ default['rs-haproxy']['install_method'] = 'source'
 
 # HAProxy source version
 # Set to nil to attempt retrieving version from rs-haproxy/source/url
-default['rs-haproxy']['source']['version'] = nil
+default['rs-haproxy']['source']['version'] = '1.5.19'
 
 # HAProxy source URL
-default['rs-haproxy']['source']['url'] = 'http://ps-cf.rightscale.com/haproxy/haproxy-1.5.18.tar.gz'
+default['rs-haproxy']['source']['url'] = 'http://ps-cf.rightscale.com/haproxy/haproxy-1.5.19.tar.gz'
 
 # HAProxy source SHA256 checksum
-default['rs-haproxy']['source']['checksum'] = '14a5684d85cf65c34a8d441afff2aaa4dd9b4234e81b3d4ddd242e6e7c97257e'
+default['rs-haproxy']['source']['checksum'] = 'e00ae2a633da614967f2e3ebebdb817ec537cba8383b833fc8d9a506876e0d5e'
 
 # HAProxy backend checks
 default['rs-haproxy']['backend']['inter'] = 300
