@@ -104,6 +104,9 @@ end
 # Initialize backend section which will be generated in the haproxy.cfg
 node.default['haproxy']['config']['backend'] = {}
 
+node.default['haproxy']['config']['frontend']['all_requests']['acl'] = node['rs-haproxy']['acls']
+node.default['haproxy']['config']['frontend']['all_requests']['use_backend'] = node['rs-haproxy']['use_backend']
+
 # Iterate through each application server pool served by the HAProxy server and set up the
 # ACLs in the frontend section and the corresponding backed sections
 node['rs-haproxy']['pools'].each do |pool_name|
@@ -230,8 +233,6 @@ node['rs-haproxy']['pools'].each do |pool_name|
   node.default['haproxy']['config']['backend'][pool_name]['server'] ||= []
   node.default['haproxy']['config']['backend'][pool_name]['server'] = backend_servers_list
 end
-
-node.default['haproxy']['config']['frontend']['all_requests']['acl'] = node['rs-haproxy']['acls']
 
 # node['rs-haproxy']['acls'].each do |acl|
 #   key,value=acl.split(' ',2)
