@@ -232,14 +232,18 @@ node['rs-haproxy']['pools'].each do |pool_name|
 end
 
 node['rs-haproxy']['acls'].each do |acl|
-  node.default['haproxy']['config']['frontend']['all_requests']['acl'][acl.split(' ').first] ||= []
-  node.default['haproxy']['config']['frontend']['all_requests']['acl'][acl.split(' ').first] <<= acl.split(' ').last unless \
-    node.default['haproxy']['config']['frontend']['all_requests']['acl'][acl.split(' ').first].include?(acl.split(' ').last)
+  key,value=acl.split(' ',2)
+  Chef::Log.info "Setting acl(#{key}) to value(#{value})"
+  node.default['haproxy']['config']['frontend']['all_requests']['acl']key] ||= []
+  node.default['haproxy']['config']['frontend']['all_requests']['acl'][key] <<= value unless \
+    node.default['haproxy']['config']['frontend']['all_requests']['acl'][key].include?(value)
 end
 
 node['rs-haproxy']['use_backend'].each do |use_backend|
-  node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][use_backend.split(' ').first] <<= use_backend.split(' ').last unless \
-    node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][use_backend.split(' ').first].include?(use_backend.split(' ').last)
+  key,value=use_backend.split(' ',2)
+  Chef::Log.info "Setting use_backend(#{key}) to value(#{value})"
+  node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][key] <<= value unless \
+    node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][key].include?(value)
 end
 
 include_recipe 'rs-haproxy::default'
