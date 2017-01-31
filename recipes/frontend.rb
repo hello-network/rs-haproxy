@@ -223,9 +223,9 @@ node['rs-haproxy']['pools'].each do |pool_name|
     # Set up ACLs based on the vhost_path information from the application servers
     acl_name = "acl_#{pool_name}"
     node.default['haproxy']['config']['frontend']['all_requests']['acl'] ||= {}
-    node.default['haproxy']['config']['frontend']['all_requests']['acl'][acl_name] = [acl_setting]
+    node.default['haproxy']['config']['frontend']['all_requests']['acl'][acl_name] = acl_setting
     node.default['haproxy']['config']['frontend']['all_requests']['use_backend'] ||= {}
-    node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][pool_name] = ["if #{acl_name}"]
+    node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][pool_name] = "if #{acl_name}"
   end
 
   # Set up backend section for each application server pool served by HAProxy
@@ -248,11 +248,17 @@ end
 
 node.default['haproxy']['config']['frontend']['all_requests']['acl'] = @acls
 
-# node['rs-haproxy']['use_backend'].each do |use_backend|
-#   key,value=use_backend.split(' ',2)
-#   Chef::Log.info "Setting use_backend(#{key}) to value(#{value})"
-#   node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][key].push(value) unless \
-#     node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][key].include?(value)
-# end
+@use_backends = {}
+node['haproxy']['config']['frontend']['all_requests']['use_backend'].each do |k,v|
+  @use_backends[k] = v
+end
+
+node['rs-haproxy']['use_backend'].each do |use_backend|
+  key,value=use_backend.split(' ',2)
+  Chef::Log.info "Setting use_backend(#{key}) to value(#{value})"
+  @use_backends[key] = value
+end
+
+node.default['haproxy']['config']['frontend']['all_requests']['use_backend'] = @use_backends
 
 include_recipe 'rs-haproxy::default'
