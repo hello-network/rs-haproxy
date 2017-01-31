@@ -86,7 +86,7 @@ node.default['haproxy']['config']['frontend']['all_requests'] ||= {}
 node.default['haproxy']['config']['frontend']['all_requests']['default_backend'] = node['rs-haproxy']['pools'].last
 node.default['haproxy']['config']['frontend']['all_requests']['bind'] = "#{node['haproxy']['incoming_address']}:#{node['haproxy']['incoming_port']}"
 node.default['haproxy']['config']['frontend']['all_requests']['maxconn'] = node['rs-haproxy']['global_max_connections']
-node.default['haproxy']['config']['frontend']['all_requests']['acl'] = node['rs-haproxy']['acls']
+
 # HAproxy Redirect all HTTP traffic to HTTPS when SSL is handled by haproxy.
 # https://cbonte.github.io/haproxy-dconv/configuration-1.5.html#check-ssl
 
@@ -223,13 +223,23 @@ node['rs-haproxy']['pools'].each do |pool_name|
     node.default['haproxy']['config']['frontend']['all_requests']['acl'][acl_name] = acl_setting
     node.default['haproxy']['config']['frontend']['all_requests']['use_backend'] ||= {}
     node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][pool_name] = "if #{acl_name}"
-    node.default['haproxy']['config']['frontend']['all_requests']['use_backend'] << node['rs-haproxy']['use_backend']
   end
 
   # Set up backend section for each application server pool served by HAProxy
   node.default['haproxy']['config']['backend'][pool_name] = {}
   node.default['haproxy']['config']['backend'][pool_name]['server'] ||= []
   node.default['haproxy']['config']['backend'][pool_name]['server'] = backend_servers_list
+end
+
+node['rs-haproxy']['acls'].each do |acl|
+  node.default['haproxy']['config']['frontend']['all_requests']['acl'][acl.split(' ').first] ||= []
+  node.default['haproxy']['config']['frontend']['all_requests']['acl'][acl.split(' ').first] << acl.split(' ').last unless \
+    node.default['haproxy']['config']['frontend']['all_requests']['acl'][acl.split(' ').first].include?(acl.split(' ').last)
+end
+
+node['rs-haproxy']['use_backend'].each do |use_backend|
+  node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][use_backend.split(' ').first] << use_backend.split(' ').last unless \
+    node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][use_backend.split(' ').first].include?(use_backend.split(' ').last)
 end
 
 include_recipe 'rs-haproxy::default'
