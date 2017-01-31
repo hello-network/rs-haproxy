@@ -234,7 +234,7 @@ end
 node['rs-haproxy']['acls'].each do |acl|
   key,value=acl.split(' ',2)
   Chef::Log.info "Setting acl(#{key}) to value(#{value})"
-  node.default['haproxy']['config']['frontend']['all_requests']['acl']key] ||= []
+  node.default['haproxy']['config']['frontend']['all_requests']['acl'][key] ||= []
   node.default['haproxy']['config']['frontend']['all_requests']['acl'][key] <<= value unless \
     node.default['haproxy']['config']['frontend']['all_requests']['acl'][key].include?(value)
 end
