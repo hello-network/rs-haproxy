@@ -102,4 +102,3 @@ default['haproxy']['source']['use_zlib'] = true
 
 # HAproxy haproxy config defaults options
 default['haproxy']['config']['defaults']['http-check expect'] = []
-default['haproxy']['acls'] ||= []

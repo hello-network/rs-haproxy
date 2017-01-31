@@ -264,3 +264,13 @@ attribute 'rs-haproxy/acls',
     'rs-haproxy::default',
     'rs-haproxy::tags',
     'rs-haproxy::frontend' ]
+
+attribute 'rs-haproxy/use_backend',
+  :display_name => 'HAProxy use_backend list',
+  :type => 'array',
+  :required => "recommended",
+  :default => ["default"],
+  :recipes => [
+    'rs-haproxy::default',
+    'rs-haproxy::tags',
+    'rs-haproxy::frontend' ]

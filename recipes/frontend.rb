@@ -223,6 +223,7 @@ node['rs-haproxy']['pools'].each do |pool_name|
     node.default['haproxy']['config']['frontend']['all_requests']['acl'][acl_name] = acl_setting
     node.default['haproxy']['config']['frontend']['all_requests']['use_backend'] ||= {}
     node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][pool_name] = "if #{acl_name}"
+    node.default['haproxy']['config']['frontend']['all_requests']['use_backend'] << node['rs-haproxy']['use_backend']
   end
 
   # Set up backend section for each application server pool served by HAProxy
