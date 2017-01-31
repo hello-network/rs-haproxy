@@ -231,20 +231,22 @@ node['rs-haproxy']['pools'].each do |pool_name|
   node.default['haproxy']['config']['backend'][pool_name]['server'] = backend_servers_list
 end
 
-node['rs-haproxy']['acls'].each do |acl|
-  key,value=acl.split(' ',2)
-  Chef::Log.info "Setting acl(#{key}) to value(#{value})"
-  node.default['haproxy']['config']['frontend']['all_requests']['acl'][key] ||= []
-  Chef::Log.info node['haproxy']['config']['frontend']['all_requests']['acl'][key].class
-  node.default['haproxy']['config']['frontend']['all_requests']['acl'][key].push(value) unless \
-    node.default['haproxy']['config']['frontend']['all_requests']['acl'][key].include?(value)
-end
+node.default['haproxy']['config']['frontend']['all_requests']['acl'] = node['rs-haproxy']['acls']
 
-node['rs-haproxy']['use_backend'].each do |use_backend|
-  key,value=use_backend.split(' ',2)
-  Chef::Log.info "Setting use_backend(#{key}) to value(#{value})"
-  node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][key].push(value) unless \
-    node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][key].include?(value)
-end
+# node['rs-haproxy']['acls'].each do |acl|
+#   key,value=acl.split(' ',2)
+#   Chef::Log.info "Setting acl(#{key}) to value(#{value})"
+#   node.default['haproxy']['config']['frontend']['all_requests']['acl'][key] ||= []
+#   Chef::Log.info node['haproxy']['config']['frontend']['all_requests']['acl'][key].class
+#   node.default['haproxy']['config']['frontend']['all_requests']['acl'][key].push(value) unless \
+#     node.default['haproxy']['config']['frontend']['all_requests']['acl'][key].include?(value)
+# end
+
+# node['rs-haproxy']['use_backend'].each do |use_backend|
+#   key,value=use_backend.split(' ',2)
+#   Chef::Log.info "Setting use_backend(#{key}) to value(#{value})"
+#   node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][key].push(value) unless \
+#     node.default['haproxy']['config']['frontend']['all_requests']['use_backend'][key].include?(value)
+# end
 
 include_recipe 'rs-haproxy::default'
