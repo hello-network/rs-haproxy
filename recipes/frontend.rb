@@ -141,7 +141,7 @@ node['rs-haproxy']['pools'].each do |pool_name|
         'inter' => node['rs-haproxy']['backend']['inter'],
         'rise' => node['rs-haproxy']['backend']['rise'],
         'fall' => node['rs-haproxy']['backend']['fall'],
-        'maxconn' => node['haproxy']['member_max_connections']
+        'maxconn' => node['rs-haproxy']['backend']['member_max_connections'].include?(pool_name) ? node['rs-haproxy']['backend']['member_max_connections'][pool_name] : node['haproxy']['member_max_connections']
       }
 
       if node['rs-haproxy']['health_check_uri']
